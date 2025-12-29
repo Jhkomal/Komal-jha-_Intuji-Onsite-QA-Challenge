@@ -35,3 +35,15 @@ test('User should be able to sign up successfully', async ({ page }) => {
   await page.getByRole('button', { name: 'Create Account' }).click();
   await page.getByRole('link', { name: 'Continue' }).click();
 });
+
+test('User should not be able to sign up with an existing email', async ({ page }) => {
+  await page.goto('https://automationexercise.com/');
+  await page.getByRole('link', { name: ' Signup / Login' }).click();
+  await page.getByText('New User Signup! Signup').click();
+  await page.getByRole('textbox', { name: 'Name' }).click();
+  await page.getByRole('textbox', { name: 'Name' }).fill('komal jha');
+  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').click();
+  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill('komaljha1103@yopmail.com');
+  await page.getByRole('button', { name: 'Signup' }).click();
+  await page.getByText('Email Address already exist!').isVisible();
+});
