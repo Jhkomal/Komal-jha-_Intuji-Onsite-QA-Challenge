@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('User should be able to sign up successfully', async ({ page }) => {
   await page.goto('https://automationexercise.com/');
   await page.getByRole('link', { name: ' Signup / Login' }).click();
   await page.getByText('New User Signup! Signup').click();
