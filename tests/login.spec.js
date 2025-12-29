@@ -1,85 +1,17 @@
 import { test, expect } from '@playwright/test';
+import LoginPage from '../Pages/LoginPage';
 
-test('User should be able to sign up successfully', async ({ page }) => {
-  await page.goto('https://automationexercise.com/');
-  await page.getByRole('link', { name: ' Signup / Login' }).click();
-  await page.getByText('New User Signup! Signup').click();
-  await page.getByRole('textbox', { name: 'Name' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill('komal jha');
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').click();
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill('komaljha1103@yopmail.com');
-  await page.getByRole('button', { name: 'Signup' }).click();
-  await page.getByRole('radio', { name: 'Mrs.' }).check();
-  await page.getByRole('textbox', { name: 'Password *' }).click();
-  await page.getByRole('textbox', { name: 'Password *' }).fill('Password@123');
-  await page.locator('#days').selectOption('12');
-  await page.locator('#months').selectOption('12');
-  await page.locator('#years').selectOption('2003');
-  await page.getByRole('textbox', { name: 'First name *' }).click();
-  await page.getByRole('textbox', { name: 'First name *' }).fill('komal');
-  await page.getByRole('textbox', { name: 'Last name *' }).click();
-  await page.getByRole('textbox', { name: 'First name *' }).fill('komal');
-  await page.getByRole('textbox', { name: 'Last name *' }).fill('jha');
-  await page.getByRole('textbox', { name: 'Company', exact: true }).click();
-  await page.getByRole('textbox', { name: 'Company', exact: true }).fill('golden');
-  await page.getByRole('textbox', { name: 'State *' }).click();
-  await page.getByRole('textbox', { name: 'State *' }).fill('TX');
-  await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill('test');
-  await page.getByRole('textbox', { name: 'City * Zipcode *' }).click();
-  await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill('1101');
-  await page.getByRole('textbox', { name: 'Mobile Number *' }).click();
-  await page.getByRole('textbox', { name: 'Mobile Number *' }).fill('9810455961');
-  await page.locator('#zipcode').click();
-  await page.locator('#zipcode').fill('0999');
-  await page.getByRole('button', { name: 'Create Account' }).click();
-  await page.getByRole('button', { name: 'Create Account' }).click();
-  await page.getByRole('link', { name: 'Continue' }).click();
-});
+test.describe('Login Tests', () => {
+  let loginPage;
 
-test('User should not be able to sign up with an existing email', async ({ page }) => {
-  await page.goto('https://automationexercise.com/');
-  await page.getByRole('link', { name: ' Signup / Login' }).click();
-  await page.getByText('New User Signup! Signup').click();
-  await page.getByRole('textbox', { name: 'Name' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill('komal jha');
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').click();
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill('komaljha1103@yopmail.com');
-  await page.getByRole('button', { name: 'Signup' }).click();
-  await page.getByText('Email Address already exist!').isVisible();
-});
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await loginPage.navigateToHomePage();
+  });
 
-test('User should be successfully logged in after the registration',async({page}) => {
-  await page.goto('https://automationexercise.com/');
-  await page.getByRole('link', { name: ' Signup / Login' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill('komal jha');
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').click();
-  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill('komaljha119@yopmail.com');
-  await page.getByRole('button', { name: 'Signup' }).click();
-  await page.getByRole('radio', { name: 'Mrs.' }).check();
-  await page.getByRole('textbox', { name: 'Password *' }).click();
-  await page.getByRole('textbox', { name: 'Password *' }).fill('Password@123');
-  await page.locator('#days').selectOption('12');
-  await page.locator('#months').selectOption('8');
-  await page.locator('#years').selectOption('2003');
-  await page.getByRole('textbox', { name: 'First name *' }).click();
-  await page.getByRole('textbox', { name: 'First name *' }).fill('komal');
-  await page.getByText('Title Mr. Mrs. Name * Email').click();
-  await page.getByRole('textbox', { name: 'Last name *' }).click();
-  await page.getByRole('textbox', { name: 'Last name *' }).fill('jha');
-  await page.getByRole('textbox', { name: 'Company', exact: true }).click();
-  await page.getByRole('textbox', { name: 'Company', exact: true }).fill('test');
-  await page.getByRole('textbox', { name: 'State *' }).click();
-  await page.getByRole('textbox', { name: 'State *' }).fill('tx');
-  await page.getByRole('textbox', { name: 'City * Zipcode *' }).click();
-  await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill('test');
-  await page.locator('#zipcode').click();
-  await page.locator('#zipcode').fill('1198');
-  await page.getByRole('textbox', { name: 'Mobile Number *' }).click();
-  await page.getByRole('textbox', { name: 'Mobile Number *' }).fill('9819384203');
-  await page.getByRole('button', { name: 'Create Account' }).click();
-  await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill('test');
-  await page.getByRole('button', { name: 'Create Account' }).click();
-  await page.getByRole('link', { name: 'Continue' }).click();
-  await page.getByText('logged in as komaljha119@yopmail.com').isVisible();
+  test('User should login successfully with valid credentials', async () => {
+    await loginPage.goToLoginPage();
+    await loginPage.login('komaljha5567@gmail.com', 'Password@123');
+    await expect(loginPage.welcomeMessage).toBeVisible(); 
+  });
 });
