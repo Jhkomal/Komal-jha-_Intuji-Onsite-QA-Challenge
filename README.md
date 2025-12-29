@@ -7,3 +7,7 @@ How to run the test?
 ->npx playwright show-report
 ->npx playwright test --debug(for debugging)
 
+Task-1 test cases
+https://docs.google.com/spreadsheets/d/1Dt2WG6VEGXQoMIG1lrwaL51RhdXBTy1ZuQXAhfOo2ck/edit?gid=0#gid=0
+
+
